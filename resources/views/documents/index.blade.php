@@ -36,31 +36,39 @@
         <div class="card mb-4">
             <div class="card-header">Tambah Dokumen Baru</div>
             <div class="card-body">
-                <form action="{{ route('documents.store') }}" method="POST">
+                <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <input type="text" name="nama_dokumen" class="form-control @error('nama_dokumen') is-invalid @enderror" placeholder="Nama Dokumen" value="{{ old('nama_dokumen') }}" required>
+                    <div class="row align-items-end">
+                        <div class="col-md-3">
+                            <label for="nama_dokumen" class="form-label">Nama Dokumen</label>
+                            <input type="text" name="nama_dokumen" id="nama_dokumen" class="form-control @error('nama_dokumen') is-invalid @enderror" value="{{ old('nama_dokumen') }}" required>
                             @error('nama_dokumen')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <input type="date" name="tanggal_mulai" class="form-control @error('tanggal_mulai') is-invalid @enderror" title="Tanggal Mulai (Opsional)" value="{{ old('tanggal_mulai') }}">
+                        <div class="col-md-3">
+                            <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
+                            <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control @error('tanggal_mulai') is-invalid @enderror" value="{{ old('tanggal_mulai') }}">
                             @error('tanggal_mulai')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <input type="date" name="tanggal_deadline" class="form-control @error('tanggal_deadline') is-invalid @enderror" title="Tanggal Deadline" value="{{ old('tanggal_deadline') }}" required>
+                        <div class="col-md-3">
+                            <label for="tanggal_deadline" class="form-label">Tanggal Deadline</label>
+                            <input type="date" name="tanggal_deadline" id="tanggal_deadline" class="form-control @error('tanggal_deadline') is-invalid @enderror" value="{{ old('tanggal_deadline') }}" required>
                              @error('tanggal_deadline')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-2 mb-3">
-                            <button type="submit" class="btn btn-primary w-100">Tambah</button>
+                        <div class="col-md-3">
+                            <label for="document_file" class="form-label">Upload File</label>
+                            <input class="form-control @error('document_file') is-invalid @enderror" type="file" name="document_file" id="document_file">
+                            @error('document_file')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Tambah Dokumen</button>
                 </form>
             </div>
         </div>
@@ -90,6 +98,7 @@
             </div>
         </div>
 
+        {{-- BAGIAN YANG HILANG ADA DI BAWAH INI --}}
         <div class="card">
             <div class="card-header">Daftar Dokumen</div>
             <div class="card-body p-0">
@@ -111,7 +120,7 @@
                                 </td>
                                 <td>
                                     @if ($doc->tanggal_mulai)
-                                        {{ \Carbon\Carbon::parse($doc->tanggal_mulai)->format('d/m/Y') }} - 
+                                        {{ \Carbon\Carbon::parse($doc->tanggal_mulai)->format('d/m/Y') }} -
                                     @endif
                                     {{ \Carbon\Carbon::parse($doc->tanggal_deadline)->format('d/m/Y') }}
                                 </td>

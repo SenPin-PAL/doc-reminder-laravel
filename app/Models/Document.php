@@ -16,6 +16,7 @@ class Document extends Model
         'tanggal_mulai',
         'tanggal_deadline',
         'user_id',
+        'file_path',
     ];
 
     /**
